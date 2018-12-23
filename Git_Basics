@@ -1,0 +1,94 @@
+GitHub is an online repository for storing source code and is a Version Controlling System. It is often referred as REMOTE Repository.
+
+Git is a local repository for storing the source code that has been develoed in our work place and is referred as WORKING Repository.
+
+We Use Git Bash tool to enabled communication between GitHub and Git.
+
+We always work on a code, make changes to it and store it in local repository, Git. Once it is saved in local repository, it must be made available to everyone to access the code and this is achieved by pushing the code to remote repository, GitHub.
+
+If we don't have a remote/local repository and need to create one, follow below steps.
+	1. Log In to GitHub and find a '+' button on top right corner which will have a drop down telling to create a new repository. Click on it.
+	2. Name the repository and a '.git' (dabatase to make note of code changes) folder and readme.txt will be created.
+	3. Install Git Bash in the work place to communicate with GitHub from local work place.
+	4. 'git clone <URL of repository>' will make a clone of remote repository (i.e, the one created in GitHub)
+	5. A directory with '.git' folder and readme.txt file will be created locally. We refer to it as local repository
+	6. Now if you have set of scripts/code available locally, place them in the local repository and then push it to GitHub using Git Bash
+	7. If you have any changes that are made in remote repository but not in local repository, we need to fetch it from GitHub to local using Git Bash
+	
+Git has three versions from making a code change till updating it to repository.
+a) Working directory version b) Staged version c) Commit version
+
+The reason why Git uses two phases - staging and committing - to update the repository is that by staging first you can group all related changes into a single commit and give it a meaningful comment.
+
+A Commit is a snapshot of your project at a specific point in time.
+
+Please see below basic set of Git commands:
+--------------------------------------------
+
+# clone a GitHub repository
+$ git clone <URL>
+# check working directory code changes
+$ git status
+# add changes to index (Staging Phase), we can add specific set of files that have changes made to update the repository
+$ git add <folder>
+$ git add <file>
+# commit a new version
+$ git commit -m <comment>
+# identify remote repository
+$ git remote
+$ git remote show <repo name>
+# push new version to GitHub
+$ git push origin master
+# to view the history of changes made in a project
+$ git log [--oneline --decorate --author=yourname] #the switches in square brackets are optional
+
+
+Branch
+------
+
+A branch represents an independent line of development in a project with its own separate history of commits.
+All Git projects have a master branch by default.
+If your Git project were a tree the master branch would be the trunk. From the trunk it is possible to manually create separate lines of development as independent branches with their own separate commits.
+		
+More Git Commands below:
+------------------------
+
+# show history of commits
+$ git log --oneline --decorate
+# list local branches
+$ git branch
+# list remote branches
+$ git branch --remote
+# view changes in the working tree
+# not yet staged
+$ git diff <file>
+# view the changes between
+# the index and the last commit
+$ git diff --cached <file>
+# view the changes in the working
+# tree since the last commit
+$ git diff HEAD <file>
+# view changes between
+# two commits
+$ git diff <commit1> <commit2> <file>
+# undo unstaged changes
+$ git checkout <file>
+# unstage changes
+$ git reset HEAD <file>
+# undo committed change
+$ git revert <commit> --no-edit
+# apply tag to a version
+$ git tag -a <tag> <commit> -m <comment>
+# move or rename a file
+# and stage
+$ git mv <source> <destination>
+# delete a file and stage
+$ git rm <file>
+# create a branch
+$ git branch <branch name>
+# switch to another branch
+$ git checkout <branch name>
+# merge from branch
+$ git merge <branch name>
+# tag the last commit
+$ git tag <version>
