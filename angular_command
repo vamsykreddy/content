@@ -1,0 +1,2 @@
+To create a service
+  ng g s <service_name> #this will create a service.ts file in src/app directory
