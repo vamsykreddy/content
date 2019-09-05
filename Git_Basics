@@ -1,94 +1,101 @@
-GitHub is an online repository for storing source code and is a Version Controlling System. It is often referred as REMOTE Repository.
+Git for Beginners:
+__________________
 
-Git is a local repository for storing the source code that has been develoed in our work place and is referred as WORKING Repository.
+In this note, anything with '-->' is a git command
+Local repository refers to the repository created in your workspace, eg: git repository created by you in your personal laptop.
+Remote repository refers to the repository other than local repository, eg: repository hosted on github
+__________________
 
-We Use Git Bash tool to enabled communication between GitHub and Git.
+Since we already have a remote repository set up on github, let us see how to create a local repository. You can create local repository anywhere (you wish) that has internet connection, even in your local computer.
 
-We always work on a code, make changes to it and store it in local repository, Git. Once it is saved in local repository, it must be made available to everyone to access the code and this is achieved by pushing the code to remote repository, GitHub.
+#To create a local git repo
+--> git init										# to initialize a git repository, this command will create .git directory where all metadata will be stored.
 
-If we don't have a remote/local repository and need to create one, follow below steps.
-	1. Log In to GitHub and find a '+' button on top right corner which will have a drop down telling to create a new repository. Click on it.
-	2. Name the repository and a '.git' (dabatase to make note of code changes) folder and readme.txt will be created.
-	3. Install Git Bash in the work place to communicate with GitHub from local work place.
-	4. 'git clone <URL of repository>' will make a clone of remote repository (i.e, the one created in GitHub)
-	5. A directory with '.git' folder and readme.txt file will be created locally. We refer to it as local repository
-	6. Now if you have set of scripts/code available locally, place them in the local repository and then push it to GitHub using Git Bash
-	7. If you have any changes that are made in remote repository but not in local repository, we need to fetch it from GitHub to local using Git Bash
-	
-Git has three versions from making a code change till updating it to repository.
-a) Working directory version b) Staged version c) Commit version
+#Configure basic details
+{
+	--> git config user.name "FIRST_NAME LAST_NAME"			# you will be identified by this name in git and github, it can be any name that will help rest of the team identify that it is you.
 
-The reason why Git uses two phases - staging and committing - to update the repository is that by staging first you can group all related changes into a single commit and give it a meaningful comment.
+	--> git config user.email "MY_NAME@example.com"			# this should be your email ID linked to github
 
-A Commit is a snapshot of your project at a specific point in time.
+	#Command set the credential helper to use Git Credential Manager for Windows
+	--> git config credential.helper manager
+	--> git config --global credential.helper wincred
 
-Please see below basic set of Git commands:
---------------------------------------------
+	#Command to use a proxy server (if you are behind proxy)
+	--> git config --global http.proxy http://proxyuser:proxypwd@proxy.server.com:8080
+		#This line is exclusively for machines behind proxy ,if you encounter with an error after executing above command, find .gitconfig file in <your_machine>:C/Users/<machine_user_name>/.gitconfig and replace content in the file with below:
+			"""
+				[credential]	helper = wincred[http]	proxy = 
+				http://<machine_user_name>:<machine_password>@proxy.domain.com:8080[url "https://"]	insteadOf = git://
+			"""
+		After doing the workaround, need not run the above command again
+}
 
-# clone a GitHub repository
-$ git clone <URL>
-# check working directory code changes
-$ git status
-# add changes to index (Staging Phase), we can add specific set of files that have changes made to update the repository
-$ git add <folder>
-$ git add <file>
-# commit a new version
-$ git commit -m <comment>
-# identify remote repository
-$ git remote
-$ git remote show <repo name>
-# push new version to GitHub
-$ git push origin master
-# to view the history of changes made in a project
-$ git log [--oneline --decorate --author=yourname] #the switches in square brackets are optional
+#Connect to remote repository
+--> git remote add origin <remo url>			# Yippe ! You are connected to a remote repository in GitHub	
 
+#Now that we are connected to remote repo in Github, going forward whenever you see the word remote repo it will refer to that remote repo in github
+#Let's clone the remote repo
+--> git clone <remote-repo url>						# This will clone MASTER branch
+--> git clone -b <branch-name> <remote-repo url>		# This will clone specified branch
 
-Branch
-------
+#For any code changes you do, you should do on the cloned files that are present in your local repo
+#If you need to create a new branch in local repo, below is the command
+--> git checkout -b <branch-name>				# This is create a new branch if it doesn't exit or switches to the branch if it already exist
 
-A branch represents an independent line of development in a project with its own separate history of commits.
-All Git projects have a master branch by default.
-If your Git project were a tree the master branch would be the trunk. From the trunk it is possible to manually create separate lines of development as independent branches with their own separate commits.
-		
-More Git Commands below:
-------------------------
+#Switch to the branch in local repo where you need to make changes
+#To find current branch
+--> git branch
+#To switch to a branch where you want to make changes
+--> git checkout -b <branch-name>
 
-# show history of commits
-$ git log --oneline --decorate
-# list local branches
-$ git branch
-# list remote branches
-$ git branch --remote
-# view changes in the working tree
-# not yet staged
-$ git diff <file>
-# view the changes between
-# the index and the last commit
-$ git diff --cached <file>
-# view the changes in the working
-# tree since the last commit
-$ git diff HEAD <file>
-# view changes between
-# two commits
-$ git diff <commit1> <commit2> <file>
-# undo unstaged changes
-$ git checkout <file>
-# unstage changes
-$ git reset HEAD <file>
-# undo committed change
-$ git revert <commit> --no-edit
-# apply tag to a version
-$ git tag -a <tag> <commit> -m <comment>
-# move or rename a file
-# and stage
-$ git mv <source> <destination>
-# delete a file and stage
-$ git rm <file>
-# create a branch
-$ git branch <branch name>
-# switch to another branch
-$ git checkout <branch name>
-# merge from branch
-$ git merge <branch name>
-# tag the last commit
-$ git tag <version>
+#You can start making changes to the file in local repo
+#Once you are done with changes, you can commit them in local repo and push to remote repo
+#Git Commit has two stages, Staging and Commiting
+#To Stage a file that has changes made
+--> git add <file_name1> <file_name2>
+#Now the files are stages, you need to commit them if you are sure with the changes
+--> git commit -m "<meaningful commit message>"
+
+#Now the changes are committed in local repo, let us push these changes to remote repo, 
+#Whenever you are ready to push to remote repo, the branch in local repo will be compared to branch in remote repo and the committed files in local repo will be pushed to same branch in remote repo
+--> git push origin HEAD:<branch>
+-->
+#If the GitHub repo has seen new commits pushed to it, while you were working locally, use below:
+--> git pull --rebase origin master
+--> git push origin master (This is to push the local changes to remote repo)
+That way, you would replay (the --rebase part) your local commits on top of the newly updated origin/master (or origin/yourBranch: git pull origin yourBranch).
+
+-------*****-------
+When do you need to overwrite local files?
+If you feel the need to discard all your local changes and just reset/overwrite everything with a copy from the remote branch then you should follow this guide.
+
+Important: If you have any local changes, they will be lost. With or without --hard option, any local commits that haven’t been pushed will be lost.
+If you have any files that are not tracked by Git (e.g. uploaded user content), these files will not be affected.
+
+The Overwrite workflow:
+To overwrite your local files do:
+
+git fetch --all
+git reset --hard <remote>/<branch_name>
+For example:
+
+git fetch --all
+git reset --hard origin/master
+How it works:
+git fetch downloads the latest from remote without trying to merge or rebase anything.
+
+Then the git reset resets the master branch to what you just fetched. The --hard option changes all the files in your working tree to match the files in origin/master.
+
+Additional Information:
+It’s worth noting that it is possible to maintain current local commits by creating a branch from master or whichever branch you want to work on before resetting:
+
+For Example:
+
+git checkout master
+git branch new-branch-to-save-current-commits
+git fetch --all
+git reset --hard origin/master
+After this, all of the old commits will be kept in new-branch-to-save-current-commits. Uncommitted changes however (even staged), will be lost. Make sure to stash and commit anything you need.
+
+-------*****-------
