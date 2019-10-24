@@ -1,0 +1,35 @@
+Trick 1 : Fixed table layout
+---------------------------------------------------------------------------------------------------------------------
+
+The important thing of [table-layout: fixed] is that the column widths are determined by the first row of the table.
+So, if your table structure is as follow (standard table structure)
+<table>
+  <thead>
+      <tr>
+          <th> First column </th>
+          <th> Second column </th>
+          <th> Third column </th>        
+      </tr>
+  </thead>
+   <tbody>
+      <tr>
+          <td> First column </td>
+          <td> Second column </td>
+          <td> Third column </td>        
+      </tr>
+  </tbody>
+if you would like to give a width to second column then
+
+<style> 
+    table{
+        table-layout:fixed;
+        width: 100%;
+    }
+
+    table tr th:nth-child(2){
+       width: 60%;
+     }
+
+</style>
+Please look that we style the th not the td.
+---------------------------------------------------------------------------------------------------------------------
